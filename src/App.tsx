@@ -48,7 +48,8 @@ function App() {
     const confirmed = window.confirm('Voulez-vous supprimer ce médecin ?');
     if (confirmed) {
       setPhysicianList(physicianList.filter((p) => p.identifiantpp !== physician.identifiantpp));
-      if (physicianList.find((p) => p.libellesavoirfaire === physician.libellesavoirfaire && p.identifiantpp !== physician.identifiantpp)) {
+      setListPhysicianOriginal(physicianListOriginal.filter((p) => p.identifiantpp !== physician.identifiantpp));
+      if (physicianListOriginal.find((p) => p.libellesavoirfaire === physician.libellesavoirfaire && p.identifiantpp !== physician.identifiantpp)) {
         return;
       }
       setSpecialteList(specialteList.filter((s) => s !== physician.libellesavoirfaire));
