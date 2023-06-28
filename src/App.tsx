@@ -31,14 +31,15 @@ function App() {
     if (physicianListOriginal.find((p) => p.identifiantpp === physician.identifiantpp)) {
       return;
     }
-    setPhysicianList([...physicianList, physician]);
     setListPhysicianOriginal([...physicianListOriginal, physician]);
+    if(filledSpecialite !== '' && physician.libellesavoirfaire === filledSpecialite){
+      setPhysicianList([...physicianList, physician]);
+    }
 
     if (specialteList.find((s) => s === physician.libellesavoirfaire) || physician.libellesavoirfaire == null) {
       return;
     }
     setSpecialteList([...specialteList, physician.libellesavoirfaire]);
-
   };
 
   // supprime un medecin de la liste
@@ -56,14 +57,13 @@ function App() {
 
   // permet de trier les medecins par specialite
   const trierSpecialite = (specialite: string) => {
-    if(specialite === filledSpecialite){
+    if (specialite === filledSpecialite) {
       setFilledSpecialite('');
       setPhysicianList(physicianListOriginal);
       return;
     }
     const filteredList = physicianListOriginal.filter((p) => p.libellesavoirfaire === specialite);
     setPhysicianList(filteredList);
-
     setFilledSpecialite(specialite);
   };
 
@@ -101,19 +101,35 @@ function App() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {physicianList.map((physician, index) => (
-            <TableRow key={index}>
-              <TableCell>{physician.nomdexercice}</TableCell>
-              <TableCell>{physician.prenomdexercice}</TableCell>
-              <TableCell>{physician.identifiantpp}</TableCell>
-              <TableCell>{physician.libellesavoirfaire}</TableCell>
-              <TableCell>
-                <Button onClick={() => {
-                  removeList(physician);
-                }}>Supprimer</Button>
-              </TableCell>
-            </TableRow>
-          ))}
+          {filledSpecialite === '' ? (
+            physicianListOriginal.map((physician, index) => (
+              <TableRow key={index}>
+                <TableCell>{physician.nomdexercice}</TableCell>
+                <TableCell>{physician.prenomdexercice}</TableCell>
+                <TableCell>{physician.identifiantpp}</TableCell>
+                <TableCell>{physician.libellesavoirfaire}</TableCell>
+                <TableCell>
+                  <Button onClick={() => {
+                    removeList(physician);
+                  }}>Supprimer</Button>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            physicianList.map((physician, index) => (
+              <TableRow key={index}>
+                <TableCell>{physician.nomdexercice}</TableCell>
+                <TableCell>{physician.prenomdexercice}</TableCell>
+                <TableCell>{physician.identifiantpp}</TableCell>
+                <TableCell>{physician.libellesavoirfaire}</TableCell>
+                <TableCell>
+                  <Button onClick={() => {
+                    removeList(physician);
+                  }}>Supprimer</Button>
+                </TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </div>
