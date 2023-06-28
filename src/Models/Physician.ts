@@ -1,5 +1,5 @@
 interface Physician {
-    identifiantapp: string;
+    identifiantpp: string;
     codecivilitedexercice:string;
     nomdexercice:string;
     prenomdexercice:string;
